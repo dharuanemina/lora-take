@@ -2,7 +2,7 @@
   "name": "lora-take",
   "version": "1.0.0",
   "description": "This repository has a code about bot challenge, called Lora for know about Take values.",
-  "main": "./challenge/api/index.js",
+  "main": "challenge/api/index.js",
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^10.0.0",
@@ -11,7 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node",
+    "start": "node challenge/api/index.js",
     "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
