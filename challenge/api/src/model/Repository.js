@@ -13,24 +13,36 @@ module.exports = {
             }
         }
 
-        // create recursive function paginate when request other languages...
-        // todo -> create function query for better requests
-
-        const repos = await this.getLast20Repo(user, 1)
-
-        if(repos.length > 0) {
-            repos.forEach((repo) => {
-                if(repo.language && repo.language.toLowerCase() == lang.toLowerCase()) {
-                    if(response.data.results.length < quant) {
-                        response.data.results.push(this.formatDataObj(repo))
-                        response.data.quant++
+        // paginate api requests
+        for(let i = 1; i > response.data.results.length; i++) {
+            // check enought contents
+            if(response.data.results.length < quant) {
+                const repos = await this.getLast20Repo(user, i)
+                if(repos.length > 0) {
+                    repos.forEach((repo) => {
+                        if(repo.language && repo.language.toLowerCase() == lang.toLowerCase()) {
+                            if(response.data.results.length < quant) {
+                                response.data.results.push(this.formatDataObj(repo))
+                                response.data.quant++
+                            }
+                        }
+                    })
+                }
+                else {
+                    // if getLast20Repo returns an object, that means an error occurred
+                    if(repos.status) {
+                        response = {
+                            ...repos
+                        }
+                        break
+                    }
+                    else {
+                        break
                     }
                 }
-            })
-        }
-        else {
-            response = {
-                ...repos
+            }
+            else {
+                break
             }
         }
 
@@ -54,7 +66,7 @@ module.exports = {
     formatDataObj(repo) {
         return {
             full_name: repo.full_name,
-            description: repo.description,
+            description: repo.description ? repo.description : "This repository doesn't have a description",
             avatar: repo.owner.avatar_url,
         }
     }
