@@ -7,6 +7,6 @@ routes.get("/user/getAvatar/:name", userControllers.getAvatar)
 routes.get("/user/getAllData/:name", userControllers.getAllData)
 
 // gets - repositories
-routes.post("/repo/lastRepositories", repoControllers.getLastRepositories)
+routes.post("/repo/last", repoControllers.getLastRepositories)
 
 module.exports = routes
