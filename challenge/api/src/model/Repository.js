@@ -22,7 +22,7 @@ module.exports = {
             repos.forEach((repo) => {
                 if(repo.language && repo.language.toLowerCase() == lang.toLowerCase()) {
                     if(response.data.results.length < quant) {
-                        response.data.results.push(repo)
+                        response.data.results.push(this.formatDataObj(repo))
                         response.data.quant++
                     }
                 }
@@ -50,4 +50,12 @@ module.exports = {
             return errorUtils.errorDataNormalize(e)
         }
     },
+    // factory function format less info returned
+    formatDataObj(repo) {
+        return {
+            full_name: repo.full_name,
+            description: repo.description,
+            avatar: repo.owner.avatar_url,
+        }
+    }
 }
